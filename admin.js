@@ -54,3 +54,42 @@ function guardarPreguntas() {
 }
 
 cargarPreguntas();
+function mostrarRespuestas() {
+  const datos = JSON.parse(localStorage.getItem('respuestas')) || [];
+  const tabla = document.getElementById('tablaRespuestas');
+  if (!tabla) return;
+
+  if (datos.length === 0) {
+    tabla.innerHTML = '<tr><td>No hay respuestas todavía.</td></tr>';
+    return;
+  }
+
+  const encabezados = Object.keys(datos[0]);
+  let html = '<tr>' + encabezados.map(h => `<th>${h}</th>`).join('') + '</tr>';
+
+  datos.forEach(resp => {
+    html += '<tr>' + encabezados.map(h => `<td>${resp[h] || ''}</td>`).join('') + '</tr>';
+  });
+
+  tabla.innerHTML = html;
+}
+
+function descargarCSV() {
+  const datos = JSON.parse(localStorage.getItem('respuestas')) || [];
+  if (datos.length === 0) {
+    alert('No hay respuestas para descargar.');
+    return;
+  }
+
+  const encabezados = Object.keys(datos[0]);
+  const filas = datos.map(obj => encabezados.map(e => `"${obj[e] || ''}"`).join(','));
+  const csv = [encabezados.join(','), ...filas].join('\n');
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'respuestas.csv';
+  link.click();
+}
+
+mostrarRespuestas();
