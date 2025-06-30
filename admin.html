@@ -3,39 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Administrador de Cuestionario</title>
-  <link rel="stylesheet" href="./style.css" />
+  <title>Administrador - Cuestionario</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Panel de Administración</h1>
 
-  <form id="formPregunta">
-    <input type="text" id="textoPregunta" placeholder="Escribe la pregunta" required />
-    <button type="submit">Agregar pregunta</button>
-  </form>
+  <section>
+    <h2>📋 Lista de Preguntas</h2>
+    <form id="formPregunta">
+      <input type="text" id="textoPregunta" placeholder="Escribe una nueva pregunta" required />
+      <button type="submit">➕ Agregar</button>
+    </form>
 
-  <h2>Preguntas actuales:</h2>
-  <ul id="listaPreguntas"></ul>
+    <ul id="listaPreguntas" style="list-style: none; padding-left: 0; margin-top: 10px;"></ul>
 
-  <button onclick="guardarPreguntas()">💾 Guardar cambios</button>
+    <button onclick="guardarPreguntas()">💾 Descargar preguntas (JSON)</button>
+  </section>
 
-  <script src="./admin.js"></script>
-  <script>
-    <h2>Respuestas recibidas:</h2>
-<table id="tablaRespuestas" border="1" style="width: 100%; margin-top: 10px;"></table>
-<button onclick="descargarCSV()">📥 Descargar CSV</button>
+  <hr>
 
-<script src="admin.js"></script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./service-worker.js')
-      .then(function (reg) {
-        console.log('Service Worker registrado:', reg);
-      })
-      .catch(function (err) {
-        console.error('Error al registrar Service Worker:', err);
-      });
-  }
-</script>
+  <section>
+    <h2>📊 Respuestas Recibidas</h2>
+    <table id="tablaRespuestas" border="1" style="width: 100%; margin-top: 10px; border-collapse: collapse;"></table>
+    <button onclick="descargarCSV()">📥 Descargar respuestas (CSV)</button>
+  </section>
 
+  <script src="admin.js"></script>
 </body>
 </html>
