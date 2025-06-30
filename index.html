@@ -10,21 +10,16 @@
 <body>
 <div class="form-wrapper">
   <h1>Cuestionario</h1>
-  <form id="formulario"></form>
-  <button id="enviar">Enviar respuestas</button>
-</div>
-  <script src="./preguntas.js"></script>
-  <script>
+<form id="formulario"></form>
+<button id="enviar">Enviar respuestas</button>
+
+<script src="./preguntas.js"></script>
+<script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./service-worker.js')
-      .then(function (reg) {
-        console.log('Service Worker registrado:', reg);
-      })
-      .catch(function (err) {
-        console.error('Error al registrar Service Worker:', err);
-      });
+      .then(reg => console.log('SW registrado:', reg))
+      .catch(err => console.error('Error SW:', err));
   }
 </script>
-
 </body>
 </html>
