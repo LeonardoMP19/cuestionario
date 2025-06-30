@@ -1,32 +1,32 @@
 fetch('preguntas.json')
   .then(res => res.json())
   .then(preguntas => {
-    const formulario = document.getElementById('formulario');
+const formulario = document.getElementById('formulario');
+const btnEnviar = document.getElementById('enviar');
 
-    preguntas.forEach(p => {
-      const div = document.createElement('div');
-      div.innerHTML = `
-        <label for="input-${p.id}">${p.pregunta}</label><br>
-        <input id="input-${p.id}" name="${p.id}" type="text" /><br><br>
-      `;
-      formulario.appendChild(div);
-    });
+function mostrarPreguntas() {
+  formulario.innerHTML = preguntas.map(p => `
+    <label for="${p.id}">${p.pregunta}</label>
+    <input type="text" id="${p.id}" name="${p.id}" required />
+  `).join('');
+}
 
-    document.getElementById('enviar').addEventListener('click', () => {
-      const respuestas = {};
-      preguntas.forEach(p => {
-        const valor = document.querySelector(`[name="${p.id}"]`).value.trim();
-        respuestas[p.pregunta] = valor;
-      });
+btnEnviar.addEventListener('click', () => {
+  const respuestas = {};
+  preguntas.forEach(p => {
+    const valor = document.querySelector(`[name="${p.id}"]`).value;
+    respuestas[p.pregunta] = valor;
+  });
 
-      // Guarda las respuestas en localStorage (array de respuestas)
-      const anteriores = JSON.parse(localStorage.getItem('respuestas')) || [];
-      anteriores.push(respuestas);
-      localStorage.setItem('respuestas', JSON.stringify(anteriores));
+  const respuestasGuardadas = JSON.parse(localStorage.getItem('respuestas')) || [];
+  respuestasGuardadas.push(respuestas);
+  localStorage.setItem('respuestas', JSON.stringify(respuestasGuardadas));
 
-      alert('Gracias por responder');
-      formulario.reset?.(); // Si formulario es form, resetea inputs
-    });
+  alert('Gracias por responder');
+  formulario.reset();
+});
+
+mostrarPreguntas();
   })
   .catch(error => {
     console.error('Error cargando preguntas:', error);
