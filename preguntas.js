@@ -6,8 +6,8 @@ fetch('preguntas.json')
     preguntas.forEach(p => {
       const div = document.createElement('div');
       div.innerHTML = `
-        <label>${p.pregunta}</label><br>
-        <input name="${p.id}" type="text" /><br><br>
+        <label for="input-${p.id}">${p.pregunta}</label><br>
+        <input id="input-${p.id}" name="${p.id}" type="text" /><br><br>
       `;
       formulario.appendChild(div);
     });
@@ -15,10 +15,20 @@ fetch('preguntas.json')
     document.getElementById('enviar').addEventListener('click', () => {
       const respuestas = {};
       preguntas.forEach(p => {
-        const valor = document.querySelector(`[name="${p.id}"]`).value;
-        respuestas[p.id] = valor;
+        const valor = document.querySelector(`[name="${p.id}"]`).value.trim();
+        respuestas[p.pregunta] = valor;
       });
-      console.log('Respuestas:', respuestas);
+
+      // Guarda las respuestas en localStorage (array de respuestas)
+      const anteriores = JSON.parse(localStorage.getItem('respuestas')) || [];
+      anteriores.push(respuestas);
+      localStorage.setItem('respuestas', JSON.stringify(anteriores));
+
       alert('Gracias por responder');
+      formulario.reset?.(); // Si formulario es form, resetea inputs
     });
+  })
+  .catch(error => {
+    console.error('Error cargando preguntas:', error);
   });
+
