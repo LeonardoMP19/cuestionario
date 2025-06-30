@@ -5,6 +5,11 @@
   box-sizing: border-box;
 }
 
+.form-wrapper {
+  max-width: 600px;
+  margin: auto;
+}
+
 body {
   font-family: 'Segoe UI', sans-serif;
   background: #f1f3f6;
