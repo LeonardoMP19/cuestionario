@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Administrador de Cuestionario</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Panel de Administración</h1>
+
+  <form id="formPregunta">
+    <input type="text" id="textoPregunta" placeholder="Escribe la pregunta" required />
+    <button type="submit">Agregar pregunta</button>
+  </form>
+
+  <h2>Preguntas actuales:</h2>
+  <ul id="listaPreguntas"></ul>
+
+  <button onclick="guardarPreguntas()">💾 Guardar cambios</button>
+
+  <script src="admin.js"></script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(function (reg) {
+        console.log('Service Worker registrado:', reg);
+      })
+      .catch(function (err) {
+        console.error('Error al registrar Service Worker:', err);
+      });
+  }
+</script>
+
+</body>
+</html>
